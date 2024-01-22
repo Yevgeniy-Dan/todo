@@ -1,10 +1,11 @@
 const { clientUri, mongoUri, nodeEnv, port } = require("./config/config");
 
+const { errorHandler } = require("./middleware/errorMiddleware");
+
 const path = require("path");
 const cors = require("cors");
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -16,21 +17,22 @@ app.use(
   })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/todos", require("./routes/todo"));
 
 if (nodeEnv === "production") {
-  app.use(express.static(path.resolve(__dirname, "..client/build")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
-  });
+  // Change later
 } else {
   app.get("/", (req, res) => res.send("Please set to production"));
 }
 
+app.use(errorHandler);
+
 mongoose
   .connect(mongoUri)
   .then(() => {
-    app.listen(port);
+    app.listen(port, () => console.log(`Server started on port ${port}`));
   })
   .catch((err) => console.log(err));
