@@ -6,7 +6,11 @@ const path = require("path");
 const cors = require("cors");
 
 const express = require("express");
-const mongoose = require("mongoose");
+const connectDB = require("./config/db");
+
+const colors = require("colors");
+
+connectDB();
 
 const app = express();
 
@@ -22,17 +26,18 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/todos", require("./routes/todo"));
 
-if (nodeEnv === "production") {
-  // Change later
-} else {
-  app.get("/", (req, res) => res.send("Please set to production"));
-}
+// if (nodeEnv === "production") {
+//   app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+//   app.get("*", (req, res) =>
+//     res.sendFile(
+//       path.resolve(__dirname, "../", "frontend", "build", "index.html")
+//     )
+//   );
+// } else {
+//   app.get("/", (req, res) => res.send("Please set to production"));
+// }
 
 app.use(errorHandler);
 
-mongoose
-  .connect(mongoUri)
-  .then(() => {
-    app.listen(port, () => console.log(`Server started on port ${port}`));
-  })
-  .catch((err) => console.log(err));
+app.listen(port, () => console.log(`Server started on port ${port}`));
