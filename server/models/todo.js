@@ -13,7 +13,7 @@ const todoSchema = new Schema({
   },
   status: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 });
 

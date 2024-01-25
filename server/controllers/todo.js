@@ -25,7 +25,6 @@ exports.addTodo = asyncHandler(async (req, res) => {
   const todo = new Todo({
     title,
     priority,
-    status: false,
   });
 
   const addedTodo = await todo.save();

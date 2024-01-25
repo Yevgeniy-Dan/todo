@@ -1,17 +1,38 @@
 import React from "react";
+import {
+  FaCircleCheck,
+  FaRegTrashCan,
+  FaRegCircleCheck,
+} from "react-icons/fa6";
 
-const TodoItem = () => {
+import { ITodoItem } from "@/interfaces/todoItem.interface";
+import PriorityCircle from "./PriorityCircle";
+
+const TodoItem: React.FC<{
+  todoItem: ITodoItem;
+}> = ({ todoItem }) => {
+  const { priority, status: isDone, title } = todoItem;
+
+  const onChangePriority = (updatedPriority: number) => {};
+
   return (
-    <div className="flex mb-4 items-center">
-      <p className="w-full text-grey-darkest">
-        Add another component to Tailwind Components
-      </p>
-      <button className="flex-no-shrink p-2 ml-4 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-green-700">
-        Done
-      </button>
-      <button className="flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red-700">
-        Remove
-      </button>
+    <div className="flex p-6 m-3 bg-white rounded-lg shadow-todo-card transform transition-all duration-300 hover:scale-105">
+      <div className="flex-grow flex items-center">
+        <p className="text-sm font-medium text-gray-800">{title}</p>
+      </div>
+      <div className="flex items-center space-x-4">
+        <PriorityCircle
+          priority={priority}
+          onChange={(value) => onChangePriority(value)}
+        />
+        {isDone ? (
+          <FaCircleCheck className="h-6 w-6 cursor-pointer text-blue-700" />
+        ) : (
+          <FaRegCircleCheck className="h-6 w-6 cursor-pointer text-blue-700" />
+        )}
+
+        <FaRegTrashCan className="text-red-700 h-6 w-6 cursor-pointer" />
+      </div>
     </div>
   );
 };

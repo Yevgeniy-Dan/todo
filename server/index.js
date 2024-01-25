@@ -26,17 +26,17 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/todos", require("./routes/todo"));
 
-// if (nodeEnv === "production") {
-//   app.use(express.static(path.join(__dirname, "../frontend/build")));
+if (nodeEnv === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-//   app.get("*", (req, res) =>
-//     res.sendFile(
-//       path.resolve(__dirname, "../", "frontend", "build", "index.html")
-//     )
-//   );
-// } else {
-//   app.get("/", (req, res) => res.send("Please set to production"));
-// }
+  app.get("*", (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, "../", "frontend", "build", "index.html")
+    )
+  );
+} else {
+  app.get("/", (req, res) => res.send("Please set to production"));
+}
 
 app.use(errorHandler);
 
