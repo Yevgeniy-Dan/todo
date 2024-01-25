@@ -5,13 +5,13 @@ import {
   FaRegCircleCheck,
 } from "react-icons/fa6";
 
-import { ITodoItem } from "@/interfaces/todoItem.interface";
+import { ITodoCard } from "@/interfaces/todoItem.interface";
 import PriorityCircle from "./PriorityCircle";
 
-const TodoItem: React.FC<{
-  todoItem: ITodoItem;
-}> = ({ todoItem }) => {
-  const { priority, status: isDone, title } = todoItem;
+const TodoCard: React.FC<{
+  todoCard: ITodoCard;
+}> = ({ todoCard }) => {
+  const { priority, status, title } = todoCard;
 
   const onChangePriority = (updatedPriority: number) => {};
 
@@ -25,7 +25,7 @@ const TodoItem: React.FC<{
           priority={priority}
           onChange={(value) => onChangePriority(value)}
         />
-        {isDone ? (
+        {status === "Done" ? (
           <FaCircleCheck className="h-6 w-6 cursor-pointer text-blue-700" />
         ) : (
           <FaRegCircleCheck className="h-6 w-6 cursor-pointer text-blue-700" />
@@ -37,4 +37,4 @@ const TodoItem: React.FC<{
   );
 };
 
-export default TodoItem;
+export default TodoCard;

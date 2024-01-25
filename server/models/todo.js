@@ -12,9 +12,10 @@ const todoSchema = new Schema({
     required: true,
   },
   status: {
-    type: Boolean,
-    default: false,
+    type: String,
+    enum: ["Done", "Undone"],
+    default: "Undone",
   },
 });
 
-module.exports = mongoose.model("TODO", todoSchema);
+module.exports = mongoose.model("Todo", todoSchema);

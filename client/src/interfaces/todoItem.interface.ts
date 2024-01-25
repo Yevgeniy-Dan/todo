@@ -1,6 +1,6 @@
-export interface ITodoItem {
+export interface ITodoCard {
   _id: string;
   title: string;
-  status: boolean;
+  status: "Done" | "Undone";
   priority: number;
 }

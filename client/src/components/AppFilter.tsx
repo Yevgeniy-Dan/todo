@@ -9,20 +9,16 @@ import useOutsideClick from "@/hooks/useOutsideClick";
 const filterValues = ["All", "Done", "Undone"];
 
 const AppFilter: React.FC<{
-  onSelect: (value: string) => void;
-}> = ({ onSelect }) => {
+  statusFilter: "All" | "Done" | "Undone";
+  onStatusFilterChange: (value: "All" | "Done" | "Undone") => void;
+}> = ({ statusFilter, onStatusFilterChange }) => {
   const [isShow, setIsShow] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("All");
 
   const wrapperRef = useRef(null);
 
   useOutsideClick(wrapperRef, () => {
     onClose();
   });
-
-  useEffect(() => {
-    onSelect(selectedValue);
-  }, [selectedValue, onSelect]);
 
   const onClose = () => {
     setIsShow(false);
@@ -35,7 +31,7 @@ const AppFilter: React.FC<{
         onClick={() => setIsShow(!isShow)}
       >
         <FaFilter className="mr-2" />
-        {selectedValue}
+        {statusFilter}
       </div>
 
       {/* The maximum value of the z-index property is equal to +-2147483647 */}
@@ -55,12 +51,12 @@ const AppFilter: React.FC<{
                     className="flex flex-row hover:bg-gray-200 cursor-pointer p-2"
                     onClick={() => {
                       onClose();
-                      setSelectedValue(value);
+                      onStatusFilterChange(value as "All" | "Done" | "Undone");
                     }}
                   >
                     <FaCheck
                       className={`text-${
-                        selectedValue === value ? "blue-500" : "transparent"
+                        statusFilter === value ? "blue-500" : "transparent"
                       } mx-3 transform translate-y-1`}
                     />
 

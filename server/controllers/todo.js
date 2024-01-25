@@ -1,3 +1,5 @@
+const { validationResult } = require("express-validator");
+
 const asyncHandler = require("express-async-handler");
 
 const Todo = require("../models/todo");
@@ -15,6 +17,14 @@ exports.getTodos = asyncHandler(async (req, res) => {
 // @route   POST /api/todos
 // @access  Public
 exports.addTodo = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new Error(JSON.stringify(errors.array()));
+    error.statusCode = 422;
+    throw error;
+  }
+
   const { title, priority } = req.body;
 
   if (!title || !priority) {
@@ -54,6 +64,17 @@ exports.removeTodo = asyncHandler(async (req, res) => {
 // @route   PUT /api/todos/:id
 // @access  Public
 exports.updateTodo = asyncHandler(async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new Error(
+      "Validation failed. Entered data is incorrect.",
+      errors
+    );
+    error.statusCode = 422;
+    throw error;
+  }
+
   const todo = await Todo.findById(req.params.id);
 
   if (!todo) {
