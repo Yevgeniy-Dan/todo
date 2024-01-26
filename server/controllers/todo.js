@@ -55,9 +55,7 @@ exports.removeTodo = asyncHandler(async (req, res) => {
 
   await todo.deleteOne();
 
-  res.status(200).json({
-    id: req.params.id,
-  });
+  res.status(200).json(todo);
 });
 
 // @desc    Update todo

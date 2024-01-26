@@ -1,5 +1,3 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL; // just /api/todos on the prod
-
 export const priorityTable: {
   [key: number]: string;
 } = {

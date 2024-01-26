@@ -1,6 +1,6 @@
 export interface ITodoCard {
-  _id: string;
+  _id?: string;
   title: string;
-  status: "Done" | "Undone";
+  status?: "Done" | "Undone";
   priority: number;
 }
