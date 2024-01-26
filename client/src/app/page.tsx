@@ -1,16 +1,19 @@
 "use client";
 
-import Layout from "@/components/Layout";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastContainer } from "react-toastify";
+
+import TodoLayout from "@/components/TodoLayout";
 
 const queryClient = new QueryClient();
 
 const Home = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <ToastContainer />
       <main>
-        <Layout />
+        <TodoLayout />
       </main>
     </QueryClientProvider>
   );

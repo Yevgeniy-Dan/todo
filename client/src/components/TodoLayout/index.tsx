@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import AddTodoForm from "@/components/AddTodoForm";
 import SearchBar from "@/components/SearchBar";
@@ -20,7 +21,7 @@ const Layout = () => {
 
   const { isPending, error, data } = useTodoQuery<ITodoCard[]>();
 
-  const { mutate } = useTodoMutation();
+  const { mutate, error: mutationError } = useTodoMutation();
 
   const [filterText, setFilterText] = useState("");
   const [prioritySort, setPrioritySort] = useState<"asc" | "desc">("desc");
@@ -42,7 +43,7 @@ const Layout = () => {
           prioritySort={prioritySort}
         />
       </section>
-      {error && "An error has occurred: " + error.message}
+      {error && toast.error(error.message)}
 
       {isPending && <p>Loading...</p>}
 

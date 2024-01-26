@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import PriorityCircle from "./PriorityCircle";
-import { ITodoCard } from "@/interfaces/todo.interface";
 import { UseMutateFunction } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+
+import PriorityCircle from "./PriorityCircle";
+
+import { ITodoCard } from "@/interfaces/todo.interface";
 import { HttpMethod } from "@/hooks/useTodos";
 
 const AddTodoForm: React.FC<{
@@ -54,6 +57,9 @@ const AddTodoForm: React.FC<{
               onSuccess() {
                 setTitle("");
                 setPriority(10);
+              },
+              onError(error) {
+                toast.error(error.message);
               },
             }
           );
